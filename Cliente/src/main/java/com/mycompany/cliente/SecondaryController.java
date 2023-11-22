@@ -52,6 +52,9 @@ public class SecondaryController {
             try {
                 String content = new String(Files.readAllBytes(privKeyPath));
                 int priv_key = Integer.parseInt(Encriptar.desencriptar_simetrico(content, custom_hash(pass)));
+                if(priv_key < 0 || priv_key >36){
+                    return false;
+                }
                 PrimaryController.setPrivKey(priv_key);
                 return true;
             } catch (IOException | NumberFormatException e) {
