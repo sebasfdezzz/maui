@@ -16,6 +16,7 @@ import javafx.scene.layout.VBox;
 public class PrimaryController {
     private int tipo_de_mensaje = 1;
     private static PrimaryController interfaz;
+    private static int priv_key=-1;
 
     @FXML
     private TextField msgArea;
@@ -205,6 +206,10 @@ public class PrimaryController {
     private void calcular_hash(){
         String texto = hash_input.getText();
         hash_output.setText(String.valueOf(texto.hashCode()));
+    }
+
+    public void setPrivKey(int key){
+        priv_key = key;
     }
 
 }

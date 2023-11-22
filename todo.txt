@@ -1,11 +1,11 @@
-[ ] carpeta de llaves privadas, donde se guardan tipo mau.key
-[ ] carpeta de ARC, donde se van a guardar todas las llaves publicas, i.e. mau.pub
-[ ] campo extra de password, la llave privada va encriptada con esta password entonces si se desencripta y no da bien, error de login
-[ ] cuando se hace login un usuario, se checan estas carpetas para ver que existan sus dos llaves, e intenta desencriptar la privada
-    [ ] de ser asi hace login normal, se desencripta la llave privada y se guarda
-    [ ] caso contrario: se crea una llave publica y privada para ese usuario
-    [ ] enteros de 1-32 complementarios y la privada va cifrada con custom hash del password, se guardan estas llaves
-[ ] Ya logineado un usuario, se setea como variable global de ese usuario su llave privada ya decifrada
+[x] carpeta de llaves privadas, donde se guardan tipo mau.key
+[x] carpeta de ARC, donde se van a guardar todas las llaves publicas, i.e. mau.pub
+[x] campo extra de password, la llave privada va encriptada con esta password entonces si se desencripta y no da bien, error de login
+[x] cuando se hace login un usuario, se checan estas carpetas para ver que existan sus dos llaves, e intenta desencriptar la privada
+    [x] de ser asi hace login normal, se desencripta la llave privada y se guarda
+    [x] caso contrario: se crea una llave publica y privada para ese usuario
+    [x] enteros de 1-32 complementarios y la privada va cifrada con custom hash del password, se guardan estas llaves
+[x] Ya logineado un usuario, se setea como variable global de ese usuario su llave privada ya decifrada
 [ ] cuando se mande un mensaje cifrado, se checa el username, se recupera la llave de ese usuario y se usa
 [ ] cuando se recibe un mensaje firmado (se necesita la llave del emisor) se busca la llave en la carpeta publica
 
