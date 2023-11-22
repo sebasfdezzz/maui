@@ -83,7 +83,7 @@ public class SecondaryController {
             Files.write(Paths.get(ProjectFolder, "Priv", nombre + ".key"), encryptedPrivKey.getBytes());
 
             String certificateContent = "nommbre: " + nombre + "\n" +
-                                        "Llave privada: " + pubKey + "\n" +
+                                        "Llave publica: " + pubKey + "\n" +
                                         "AR: AR1";
 
             Files.write(Paths.get(ProjectFolder, "Certificates", nombre + ".certificate"), certificateContent.getBytes());
