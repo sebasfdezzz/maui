@@ -69,19 +69,24 @@ public class SecondaryController {
 
     private int create_credentials(String nombre, String pass) {
         try {
-            int pubKey = (int) (Math.random() * 32) + 1;
-            String pubKeyContent = String.valueOf(pubKey);
+            int pubKey;
+            String pubKeyContent;
+            do {
+                pubKey = (int) (Math.random() * 32) + 1;
+                pubKeyContent = String.valueOf(pubKey);
+            } while (pubKeyExists(nombre, pubKey));
+
             Files.write(Paths.get(ProjectFolder, "Pub", nombre + ".pub"), pubKeyContent.getBytes());
 
             int privKey = 32 - pubKey;
             String encryptedPrivKey = Encriptar.encriptar_desencriptar_asimetrico(String.valueOf(privKey), custom_hash(pass));
             Files.write(Paths.get(ProjectFolder, "Priv", nombre + ".key"), encryptedPrivKey.getBytes());
 
-            String certificateContent = "name: " + nombre + "\n" +
-                                        "pubKey: " + pubKey + "\n" +
+            String certificateContent = "nommbre: " + nombre + "\n" +
+                                        "Llave privada: " + pubKey + "\n" +
                                         "AR: AR1";
 
-            Files.write(Paths.get(ProjectFolder,"Certificates", nombre +".certificate"), certificateContent.getBytes());
+            Files.write(Paths.get(ProjectFolder, "Certificates", nombre + ".certificate"), certificateContent.getBytes());
 
             return privKey;
         } catch (IOException e) {
@@ -90,6 +95,30 @@ public class SecondaryController {
 
         return -1;
     }
+
+    private boolean pubKeyExists(int pubKey) {
+        File pubFolder = new File(ProjectFolder, "Pub");
+        File[] pubFiles = pubFolder.listFiles();
+
+        if (pubFiles != null) {
+            for (File pubFile : pubFiles) {
+                try {
+                    String existingPubKeyContent = new String(Files.readAllBytes(pubFile.toPath()));
+                    int existingPubKey = Integer.parseInt(existingPubKeyContent.trim());
+
+                    if (existingPubKey == pubKey) {
+                        return true;
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+
+        return false;
+    }
+
+
 
 
     private int custom_hash(String text) {
