@@ -60,36 +60,33 @@ public class PrimaryController {
                 printMessage(mensajeEnviado);
                 String msj = mensaje.split("#")[0];
                 String usuario = mensaje.split("#")[1];
-                int llave = 0;
+                int llave_pub = readPublicKey(usuario);
                 int resumen;
                 String firma;
                 switch(tipo_de_mensaje){
-                    case 1:
+                    case 1: //plano
                         sendMsg.writeUTF(tipo_de_mensaje + "@" +msj + "#" +usuario);
                         break;
-                    case 2:
-                        llave = Integer.parseInt( input_llave.getText());
+                    case 2: //simetrico
+                        int llave = Integer.parseInt( input_llave.getText());
                         msj = Encriptar.encriptar_desencriptar_asimetrico(msj, llave);
                         sendMsg.writeUTF(tipo_de_mensaje + "@" +msj + "#" +usuario);
                         break;
-                    case 3:
-                        llave = Integer.parseInt(input_llave.getText());
-                        msj = Encriptar.encriptar_desencriptar_asimetrico(msj, llave);
+                    case 3: //asimetrico
+                        msj = Encriptar.encriptar_desencriptar_asimetrico(msj, llave_pub);
                         sendMsg.writeUTF(tipo_de_mensaje + "@" +msj + "#" +usuario);
                         break;
-                    case 4:
+                    case 4: //sobre
                         int llave_rnd = Encriptar.generar_llave();
                         resumen = msj.hashCode();
                         msj = Encriptar.encriptar_desencriptar_asimetrico(msj, llave_rnd);
                         firma = Encriptar.encriptar_desencriptar_asimetrico(String.valueOf(resumen), llave_rnd);
-                        int llave_pub = Integer.parseInt( input_llave.getText());
                         String llave_rnd_encriptada = Encriptar.encriptar_desencriptar_asimetrico(String.valueOf(llave_rnd), llave_pub);
                         sendMsg.writeUTF(tipo_de_mensaje + "@" +msj + "@" + firma + "@" + llave_rnd_encriptada + "#" +usuario);
                         break;
-                    case 5:
+                    case 5: //firma
                         resumen = msj.hashCode();
-                        llave = Integer.parseInt( input_llave.getText());
-                        firma = Encriptar.encriptar_desencriptar_asimetrico(String.valueOf(resumen), llave);
+                        firma = Encriptar.encriptar_desencriptar_asimetrico(String.valueOf(resumen), priv_key);
                         sendMsg.writeUTF(tipo_de_mensaje + "@" +msj + "@" + firma + "#" +usuario);
                         break;
                 }
@@ -97,6 +94,21 @@ public class PrimaryController {
             } catch (IOException e) {
                 e.printStackTrace();
             }
+        }
+    }
+    private static String ProjectFolder = System.getProperty("user.dir") + "/..";
+
+    private int readPublicKey(String usuario) {
+        try {
+            // Read the content of usuario.pub
+            Path pubKeyPath = Paths.get(ProjectFolder, "Pub", usuario + ".pub");
+            String content = new String(Files.readAllBytes(pubKeyPath));
+
+            // Parse the content into an integer
+            return Integer.parseInt(content.trim());
+        } catch (IOException | NumberFormatException e) {
+            e.printStackTrace(); // Handle the exception appropriately
+            return -1; // Or any default value or error indicator
         }
     }
 
@@ -114,31 +126,31 @@ public class PrimaryController {
                 String msj = msg.split("@")[2];
                 String msj_listo ="";
                 String usuario = msg.split("@")[0];
-                int llave = 0;
+                int llave_pub = readPublicKey(usuario);
                 String firma_lista;
                 switch(tipo_de_mensaje){
                     case 1:
                         msj_listo = msj;
                         break;
-                    case 2:
-                        llave = Integer.parseInt(interfaz.input_llave.getText());
+                    case 2: //simetrico
+                        int llave = Integer.parseInt(interfaz.input_llave.getText());
                         msj_listo = Encriptar.desencriptar_simetrico(msj, llave);
                         break;
-                    case 3:
-                        llave = Integer.parseInt(interfaz.input_llave.getText());
-                        msj_listo = Encriptar.encriptar_desencriptar_asimetrico(msj, llave);
+                    case 3: //asimetrico
+                        //llave = Integer.parseInt(interfaz.input_llave.getText());
+                        msj_listo = Encriptar.encriptar_desencriptar_asimetrico(msj, priv_key);
                         break;
-                    case 4:
-                        llave = Integer.parseInt(interfaz.input_llave.getText());
-                        int llave_rnd = Integer.parseInt(Encriptar.encriptar_desencriptar_asimetrico(msg.split("@")[4], llave));
+                    case 4: //sobre
+                        //llave = Integer.parseInt(interfaz.input_llave.getText());
+                        int llave_rnd = Integer.parseInt(Encriptar.encriptar_desencriptar_asimetrico(msg.split("@")[4], priv_key));
                         msj_listo = Encriptar.desencriptar_simetrico(msj, llave_rnd);
                         firma_lista = Encriptar.desencriptar_simetrico(msg.split("@")[3], llave_rnd);
                         msj_listo = msj_listo + "|"+firma_lista;
                         break;
-                    case 5:
-                        llave = Integer.parseInt(interfaz.input_llave.getText());
+                    case 5: //firma
+                        //llave = Integer.parseInt(interfaz.input_llave.getText());
                         msj_listo = msj;
-                        firma_lista = Encriptar.encriptar_desencriptar_asimetrico(msg.split("@")[3], llave);
+                        firma_lista = Encriptar.encriptar_desencriptar_asimetrico(msg.split("@")[3], llave_pub);
                         msj_listo = msj_listo + "|"+firma_lista;
                         break;
                     default:

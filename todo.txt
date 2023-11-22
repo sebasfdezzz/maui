@@ -6,8 +6,8 @@
     [x] caso contrario: se crea una llave publica y privada para ese usuario
     [x] enteros de 1-32 complementarios y la privada va cifrada con custom hash del password, se guardan estas llaves
 [x] Ya logineado un usuario, se setea como variable global de ese usuario su llave privada ya decifrada
-[ ] cuando se mande un mensaje cifrado, se checa el username, se recupera la llave de ese usuario y se usa
-[ ] cuando se recibe un mensaje firmado (se necesita la llave del emisor) se busca la llave en la carpeta publica
+[x] cuando se mande un mensaje cifrado, se checa el username, se recupera la llave de ese usuario y se usa
+[x] cuando se recibe un mensaje firmado (se necesita la llave del emisor) se busca la llave en la carpeta publica
 
 * la carpeta privada solo se usa para logins y se setea una vez
 * la carpeta publica se puede solicitar cuantas veces, cada que se mande mensaje cifrado o se reciba firmado (ambos casos donde se encesita acceso a al llave publica del otro)

@@ -23,7 +23,7 @@
       <RadioButton fx:id="btn4" layoutX="14.0" layoutY="495.0" mnemonicParsing="false" onAction="#sobre_digital" text="Sobre Digital" />
       <RadioButton fx:id="btn5" layoutX="14.0" layoutY="513.0" mnemonicParsing="false" onAction="#firmado" text="Firmado" />
       <TextField fx:id="input_llave" layoutX="206.0" layoutY="464.0" prefHeight="26.0" prefWidth="63.0" />
-      <Label layoutX="219.0" layoutY="495.0" prefHeight="18.0" prefWidth="37.0" text="Llave" textAlignment="CENTER" />
+      <Label layoutX="219.0" layoutY="495.0" prefHeight="18.0" prefWidth="37.0" text="Llave Simetrica" textAlignment="CENTER" />
       <Label layoutX="123.0" layoutY="530.0" text="Checar hash" />
       <TextField fx:id="hash_input" layoutX="57.0" layoutY="554.0" onKeyTyped="#calcular_hash" prefHeight="26.0" prefWidth="208.0" promptText="pegar mensaje" />
       <Label fx:id="hash_output" layoutX="11.0" layoutY="588.0" prefHeight="18.0" prefWidth="301.0" textAlignment="CENTER" />
