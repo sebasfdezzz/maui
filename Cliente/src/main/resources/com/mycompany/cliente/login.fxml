@@ -17,7 +17,12 @@
             <Font size="20.0" />
          </font>
       </TextField>
-      <Button layoutX="109.0" layoutY="348.0" mnemonicParsing="false" onAction="#login" text="Ingresar">
+      <TextField fx:id="pass" layoutX="59.0" layoutY="342.0" prefHeight="43.0" prefWidth="203.0" promptText="Contraseña">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </TextField>
+      <Button layoutX="109.0" layoutY="407.0" mnemonicParsing="false" onAction="#login" text="Ingresar">
          <font>
             <Font size="19.0" />
          </font>
