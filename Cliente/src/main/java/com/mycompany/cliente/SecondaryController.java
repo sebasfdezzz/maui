@@ -73,11 +73,21 @@ public class SecondaryController {
             int privKey = 32 - pubKey;
             String encryptedPrivKey = Encriptar.encriptar_desencriptar_asimetrico(String.valueOf(privKey), custom_hash(pass));
             Files.write(Paths.get(ProjectFolder, "Priv", nombre + ".key"), encryptedPrivKey.getBytes());
+
+            String certificateContent = "name: " + nombre + "\n" +
+                                        "pubKey: " + pubKey + "\n" +
+                                        "AR: AR1";
+
+            Files.write(Paths.get(ProjectFolder,"Certificates", nombre +".certificate"), certificateContent.getBytes());
+
             return privKey;
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+        return -1;
     }
+
 
     private int custom_hash(String text) {
         return Math.abs(text.hashCode()) % 36;
