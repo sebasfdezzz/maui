@@ -9,7 +9,7 @@
 [x] cuando se mande un mensaje cifrado, se checa el username, se recupera la llave de ese usuario y se usa
 [x] cuando se recibe un mensaje firmado (se necesita la llave del emisor) se busca la llave en la carpeta publica
 [x] carpeta de certificados digitales user.certificate (incluir nombre, public key, AR)
-[ ] checar que no haya publicas duplicadas
+[x] checar que no haya publicas duplicadas
 
 * la carpeta privada solo se usa para logins y se setea una vez
 * la carpeta publica se puede solicitar cuantas veces, cada que se mande mensaje cifrado o se reciba firmado (ambos casos donde se encesita acceso a al llave publica del otro)
